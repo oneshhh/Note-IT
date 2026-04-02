@@ -1,0 +1,20 @@
+[
+  {
+    "id": "0d4e71f2-f8f4-44f2-a0ea-608ab66d4bb0",
+    "title": "My daily to do",
+    "date": "2026-04-01",
+    "mood": "calm",
+    "contentHtml": "Today i want to do this and that and that",
+    "createdAt": "2026-04-02T07:15:57.423Z",
+    "updatedAt": "2026-04-02T07:15:57.423Z"
+  },
+  {
+    "id": "e7522569-4c17-40ca-9645-ac04ae359a28",
+    "title": "today i want to do this",
+    "date": "2026-04-01",
+    "mood": "happy",
+    "contentHtml": "this is the second note",
+    "createdAt": "2026-04-02T07:16:12.175Z",
+    "updatedAt": "2026-04-02T07:16:27.580Z"
+  }
+]
