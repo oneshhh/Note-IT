@@ -1,0 +1,10 @@
+{
+  "name": "tech-journal-app",
+  "version": "1.0.0",
+  "description": "Local-first personal journal app with calendar, mood tracking, rich text editor, and writing streaks.",
+  "main": "server.js",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  }
+}
