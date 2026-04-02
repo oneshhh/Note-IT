@@ -5,7 +5,7 @@ const path = require("path");
 const crypto = require("crypto");
 const { URL } = require("url");
 
-const HOST = "127.0.0.1";
+const HOST = process.env.HOST || "0.0.0.0";
 const PORT = Number(process.env.PORT || 3000);
 
 const ROOT = __dirname;
@@ -221,6 +221,13 @@ function renderSharedPage(note) {
 </html>`;
 }
 
+function getBaseUrl(req) {
+  const forwardedProto = req.headers["x-forwarded-proto"];
+  const proto = forwardedProto ? String(forwardedProto).split(",")[0] : "http";
+  const host = req.headers.host || `${HOST}:${PORT}`;
+  return `${proto}://${host}`;
+}
+
 async function handleApi(req, res, urlObj) {
   const { pathname, searchParams } = urlObj;
 
@@ -359,9 +366,10 @@ async function handleApi(req, res, urlObj) {
     const token = crypto.randomBytes(18).toString("hex");
     shares[token] = { noteId: id, createdAt: new Date().toISOString() };
     await writeShares(shares);
+    const baseUrl = getBaseUrl(req);
     respondJson(res, 200, {
       sharePath: `/shared/${token}`,
-      shareUrl: `http://${HOST}:${PORT}/shared/${token}`,
+      shareUrl: `${baseUrl}/shared/${token}`,
       localOnly: true,
     });
     return;
@@ -390,7 +398,7 @@ async function handleShared(req, res, pathname) {
 
 const server = http.createServer(async (req, res) => {
   try {
-    const urlObj = new URL(req.url, `http://${HOST}:${PORT}`);
+    const urlObj = new URL(req.url, getBaseUrl(req));
     const { pathname } = urlObj;
 
     if (pathname.startsWith("/api/")) {
